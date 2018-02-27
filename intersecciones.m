@@ -1,16 +1,19 @@
 function v = intersecciones(puntosOrig, modo)
 
 % v = intersecciones(puntosOrig, 'i')
-% v = intersecciones(puntosOrig, 'g')
+% v = intersecciones(puntosOrig)
 %
-% Regresa la matriz de todos los puntos validos (puntos originales y de 
-% steiner)
-% puntosOrig = coordenadas originales
+% Regresa la matriz de las aristas de un nuevo grafo diferente del dado por
+% puntosOrig cuando modo == g
+% puntosOrig = coordenadas originales cuando modo == i
+% puntosOrig = grafo de minimum spanning tree cuando solo se da un
+% argumento
 % modo == 'g' -> calcula nueva grafo
 % modo == 'i' -> inicializa todos los puntos steiner posibles
 %
 % Ejemplo:
 % intersecciones([0 6; 5 0; 2 5; 4 8; 9 3; 10 6; 2 9; 8 0; 15 4], 'i')
+% intersecciones([0 6; 5 0; 2 5; 4 8; 9 3; 10 6; 2 9; 8 0; 15 4], 'g')
 %
 % See also: recocido, proyecto1_vecino
 
@@ -28,21 +31,17 @@ function v = intersecciones(puntosOrig, modo)
 %*                                                               *
 %*****************************************************************
 
-persistent validos steiner originales
+persistent validos steiner originales edges source dest
 
 if isequal(modo, 'g')
     % obten vecino de punto(grafo) dado - obtener un nuevo grafo
-    % devolver v
-    % obtener numero de puntos steiner que se puede agregar a un grafo
+    
+    % obtener cantidad de puntos steiner que hay
     max = length(steiner);
-    
-    % obtener numero aleatorio de puntos a agregar al grafo
-    n = randi(max, 1, 1);
-    
-    % escoger si se hara un tronco horizontal o vertical de forma aleatoria
-    % 1 = horizontal
-    % 2 = vertical
-    % tronco = randi(2,1,1);
+
+    % obtener cantidad puntos a agregar al grafo de forma aleatoria
+    n = randi(max);
+    disp(n)
     % arreglo de puntos
     puntos = originales;
     
@@ -50,30 +49,52 @@ if isequal(modo, 'g')
     % puntos originales
     for i = 0: n
         % indice aleatorio de punto a agregar (del arreglo steiner)
-        index = randi(max, 1, 1);
+        index = randi(max);
         % punto a agregar
-        coord = steiner(index);
+        coord = steiner(index,:);
         % reviso que no este ya agregado
-        while ismember(coord, puntos)
-           index = randi(max, 1, 1);
-           coord = steiner(index);
+        while ismember(coord, puntos, "rows")
+           index = randi(max);
+           coord = steiner(index,:);
         end
         % se agrega la coordenada
         puntos = [puntos; coord];
     end
     
-    % genero un minimum spanning tree con los puntos y dependiendo de
-    % orientancion del tronco
-    %if tronco == 1 
-        %
-    %else
-        %
-    %end
+    s = [];
+    d = [];
+    a = [];
+    % obtengo todas las aristas posibles dado los puntos actuales
+    for i = 1: length(puntos)
+        for j = 1: length(puntos)
+            % revisar que no se este comparando el mismo punto
+            if i ~= j
+                %[x y]
+                coord1 = [puntos(i,1) puntos(i,2)];
+                coord2 = [puntos(j,1) puntos(j,2)];
+                % se puede tener un arista entre dos puntos solo si estan
+                % en la misma "x" o misma "y"
+                if coord1(1) == coord2(1) || coord1(2) == coord2(2)
+                    % aristas bidireccionales
+                    s = [s; coord1; coord2]; % fuentes
+                    d = [d; coord2; coord1]; % destinos
+                    a = [a; coord1 coord2; coord2 coord1]; % fuente-destino
+                end
+            end
+        end
+    end
+    % genero un minimum spanning tree con matrix de aristas "a"
+    
+    % comparo con grafo dado puntosOrig
+    
     
 elseif isequal(modo, 'i')
     originales = [originales; puntosOrig];
     validos = [validos; puntosOrig];
     steiner = [];
+    edges = [];
+    source = [];
+    dest = [];
     for i=1: length(puntosOrig) - 1
         for j=i+1: length(puntosOrig)
             x1 = puntosOrig(i, 1);
@@ -91,26 +112,31 @@ elseif isequal(modo, 'i')
             end
         end
     end
+    % quito puntos repetidos
+    % validos = unique(validos, 'rows', 'stable');
     validos = unique(validos, 'rows');
-    %disp("Nodos Originales");
-    %disp(originales);
-    %disp("Nodos Steiner");
-    %disp(steiner);
-    %disp("Steiner U Originales");
-    %disp(validos);
-    %v = validos;
+    steiner = unique(steiner, 'rows');
+    
+     % obtener las aristas (edges) entre todos los puntos
+    for i = 1: length(validos)
+        for j = 1: length(validos)
+            % revisar que no se este comparando el mismo punto
+            if i ~= j
+                coord1 = [validos(i,1) validos(i,2)];
+                coord2 = [validos(j,1) validos(j,2)];
+                % se puede tener un arista entre dos puntos solo si estan
+                % en la misma "x" o misma "y"
+                if coord1(1) == coord2(1) || coord1(2) == coord2(2)
+                    % aristas bidireccionales
+                    source = [source; coord1; coord2];
+                    dest = [dest; coord2; coord1];
+                    edges = [edges; coord1 coord2; coord2 coord1];
+                end
+            end
+        end
+    end
+    edges = unique(edges, 'rows');
+    
+    % genero minimum spanning tree con arreglo edges
+    % v = mst(validos, edges);
 end
-
-
-
-
-
-                    
-
-
-
-
-
-
-
-

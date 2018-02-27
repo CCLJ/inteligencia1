@@ -18,7 +18,11 @@ p.alfa = 0.80;
 p.beta = 1.2;
 p.minRazAcep = 0.90;
 p.variarC = 0;
-p.x0 = [10 -10]';
+
+% inicializo funcion de vecindad y estado inicial - mst con todos los
+% puntos originales U todos los puntos steiner
+p.x0 = intersecciones([0 6; 5 0; 2 5; 4 8; 9 3; 10 6; 2 9; 8 0; 15 4],'i');
+
 p.FcnObj = f1;         % funci�n objetivo
 p.FcnVec = @intersecciones;    % funci�n de vecindad
 p.Imp = @imprime;      % funci�n de impresi�n
@@ -26,7 +30,7 @@ p.min = 1;
 c0 = 1;               % temperatura inicial
 
 % Inicializar funci�n de vecindad
-intersecciones([0 6; 5 0; 2 5; 4 8; 9 3; 10 6; 2 9; 8 0; 15 4],'i');
+% intersecciones([0 6; 5 0; 2 5; 4 8; 9 3; 10 6; 2 9; 8 0; 15 4],'i');
 
 res = recocido(p,c0);
 % Ahora hacemos animaci�n de los resultados
