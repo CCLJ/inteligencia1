@@ -36,18 +36,55 @@ persistent validos steiner originales edges source dest
 if length(varargin)==1
     % obten vecino de punto(grafo) dado - obtener un nuevo grafo
     
-    % obtener cantidad de puntos steiner que hay
+    % obtener cantidad max de puntos steiner que hay
     max = length(steiner);
-
-    % obtener cantidad puntos a agregar al grafo de forma aleatoria
-    n = randi(max);
     
-    % arreglo de puntos
-    puntos = varargin{1};
+    % matrix de vertices de un grafo dado
+    vertex = varargin{1};
+    % obtengo puntos usados en el grafo vertex
+    puntos = [];
+    for i = 1: length(vertex)
+        coord1 = [vertex(i, 1) vertex(i, 2)];
+        coord2 = [vertex(i, 3) vertex(i, 4)];
+        puntos = [puntos; coord1; coord2];
+    end
+    puntos = unique(puntos,'rows');
     
-    % obtener n cantidad de puntos steiner a agregar del arreglo de
-    % puntos originales
-    for i = 0: n
+    % cantidad de puntos a agregar y quitar al grafo de forma aleatoria
+    add = length(validos) - length(puntos);
+    less = length(puntos) - length(originales);
+    if add > 0
+        agrega = randi(add);
+    else
+        agrega = 0;
+    end 
+    if less > 0
+        quita = randi(less);
+    else
+        quita = 0;
+    end
+    
+    % borrar "quita" cantidad de puntos de steiner del arreglo de puntos
+    for i = 1: quita
+        index = randi(length(puntos));
+        coord = puntos(index,:);
+        % no se pueden quitar los puntos originales
+        % el punto a quitar debe existir en puntos
+        while ~ismember(coord, puntos, "rows")
+            index = randi(length(puntos));
+            coord = steiner(index,:);
+             % no se pueden quitar los puntos originales
+            if ismember(coord, originales, "rows")
+                index = randi(length(puntos));
+                coord = steiner(index,:);
+            end
+        end
+        % quito coordenada (es un renglon)
+        puntos(index,:) = [];
+    end
+    
+    % añade "agrega" cantidad de puntos steiner al arreglo de puntos 
+    for i = 1: agrega
         % indice aleatorio de punto a agregar (del arreglo steiner)
         index = randi(max);
         % punto a agregar
@@ -83,9 +120,11 @@ if length(varargin)==1
             end
         end
     end
-    % genero un minimum spanning tree con matrix de aristas "a"
+    a = unique(a, 'rows');
     
-    % comparo con grafo dado puntosOrig
+    % genero un minimum spanning tree con matriz de aristas "a" entre los
+    % "puntos"
+    % v = mst(puntos, a);
     
     
 else
@@ -137,7 +176,8 @@ else
         end
     end
     edges = unique(edges, 'rows');
+    % v = edges;
     
-    % genero minimum spanning tree con arreglo edges
+    % genero minimum spanning tree de todos los puntos y edges posibles
     % v = mst(validos, edges);
 end

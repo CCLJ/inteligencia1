@@ -26,6 +26,7 @@ function arbol = mst(vertices, aristas)
 %*                                                               *
 %*****************************************************************
 
+% si no se puede conectar con los parametros dados, regreso arbol = intmax
 
 
 
