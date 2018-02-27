@@ -1,4 +1,4 @@
-function v = intersecciones(puntosOrig, modo)
+function v = intersecciones(varargin)
 
 % v = intersecciones(puntosOrig, 'i')
 % v = intersecciones(puntosOrig)
@@ -33,7 +33,7 @@ function v = intersecciones(puntosOrig, modo)
 
 persistent validos steiner originales edges source dest
 
-if isequal(modo, 'g')
+if length(varargin)==1
     % obten vecino de punto(grafo) dado - obtener un nuevo grafo
     
     % obtener cantidad de puntos steiner que hay
@@ -41,9 +41,9 @@ if isequal(modo, 'g')
 
     % obtener cantidad puntos a agregar al grafo de forma aleatoria
     n = randi(max);
-    disp(n)
+    
     % arreglo de puntos
-    puntos = originales;
+    puntos = varargin{1};
     
     % obtener n cantidad de puntos steiner a agregar del arreglo de
     % puntos originales
@@ -88,7 +88,8 @@ if isequal(modo, 'g')
     % comparo con grafo dado puntosOrig
     
     
-elseif isequal(modo, 'i')
+else
+    puntosOrig = varargin{1};
     originales = [originales; puntosOrig];
     validos = [validos; puntosOrig];
     steiner = [];
