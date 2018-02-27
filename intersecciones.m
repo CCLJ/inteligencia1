@@ -121,11 +121,7 @@ if length(varargin)==1
         end
     end
     a = unique(a, 'rows');
-    % v = a
-    
-    % genero un minimum spanning tree con matriz de aristas "a" con los
-    % "puntos" nuevos.
-    % v = mst(puntos, a);
+    v = a;
     
     
 else
@@ -177,8 +173,5 @@ else
         end
     end
     edges = unique(edges, 'rows');
-    % v = edges;
-    
-    % genero minimum spanning tree de todos los puntos y edges posibles
-    % v = mst(validos, edges);
+    v = edges;
 end
