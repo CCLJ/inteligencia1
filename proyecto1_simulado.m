@@ -26,7 +26,7 @@ p.min = 1;
 c0 = 1;               % temperatura inicial
 
 % Inicializar funci�n de vecindad
-intersecciones([0 6; 5 0; 2 5; 4 8; 9 3; 10 6; 2 9; 8 0; 15 4],[0.2 0.2]');
+intersecciones([0 6; 5 0; 2 5; 4 8; 9 3; 10 6; 2 9; 8 0; 15 4],'i');
 
 res = recocido(p,c0);
 % Ahora hacemos animaci�n de los resultados
