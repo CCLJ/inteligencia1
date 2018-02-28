@@ -12,7 +12,6 @@ p.alfa = 0.80;
 p.beta = 1.2;
 p.minRazAcep = 0.90;
 p.variarC = 0;
-p.x0 = [1 3 5 7 9]'; % nodos iniciales a tomar en cuenta
 
 % Coordenadas de los datos originales
 C = [0 6; 5 0; 2 5; 4 8; 9 3; 10 6; 2 9; 8 0; 15 4];
@@ -20,19 +19,28 @@ C = [0 6; 5 0; 2 5; 4 8; 9 3; 10 6; 2 9; 8 0; 15 4];
 % Inicializa Steiner obtiene los datos de todos los nodos y aristas
 % posibles.
 [xC,yC,P,ind,A,T] = inicializaSteiner(C);
+%disp(xC);
+%disp(yC);
+%disp(P);
+%disp(ind);
+%disp(A);
+
+p.x0 = ind'; % nodos iniciales a tomar en cuenta son los originales
 
 % inicializa vecino y costoSteienr con los indices de los nodos originales
 % y las coordenadas de todos los puntos posibles
 vecino(ind, P);
 costoSteiner(A,P,ind);
 
+
 p.FcnObj = @objetivo;  % funci�n objetivo
 p.FcnVec = @vecino;    % funci�n de vecindad
-p.Imp = @imprime;      % funci�n de impresi�n
+p.Imp = @imprime2;      % funci�n de impresi�n
 p.min = 1;
 c0 = 1;               % temperatura inicial
 
 res = recocido(p,c0);
+%%
 % Ahora hacemos animaci�n de los resultados
 for i=1:length(res.intentos)
    subplot(3,1,1)

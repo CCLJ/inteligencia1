@@ -21,6 +21,8 @@ function G = generaGrafo(varargin)
 persistent indicesOriginales puntosTotales
 
 if length(varargin) == 1
+    % disp(indicesOriginales);
+    % disp(puntosTotales);
     grafo = varargin{1};
     
     maxPuntos = length(puntosTotales);
@@ -46,7 +48,8 @@ if length(varargin) == 1
         % obtener indice aleatorio que no pase el tamaño de puntos posibles
         index = randi(maxPuntos);
         if ismember(index, grafo) && ~ismember(index, indicesOriginales)
-            grafo(index) = [];
+            it = find(grafo == index);
+            grafo(it) = [];
             remove = remove - 1;
         end
     end
@@ -66,6 +69,8 @@ if length(varargin) == 1
 else
     indicesOriginales = varargin{1};
     puntosTotales = varargin{2};
+    % disp(indicesOriginales);
+    % disp(puntosTotales);
 end
 
 

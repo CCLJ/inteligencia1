@@ -82,7 +82,6 @@ if c==0
    u = TempInicial(u); 
    fprintf('temperatura inicial calculada =%7.4f\n', c);
 end
-
 Recocido(u);
 fprintf('Mejor punto encontrado:\n')
 params.Imp(mejor)
@@ -145,9 +144,12 @@ function [uFinal,razonAceptacion] = CadenaMarkov(u)
 global params c MIN
 intentos = 0;
 intentosAceptados = 0;
+disp(u);
+disp("afuera cadena markov");
 while intentosAceptados<params.cadIntAcep && ...
       intentos<params.cadInt
    % genera vecino
+   disp("En cadena markov while");
    v.x = params.FcnVec(u.x);
    % evaluacion de vecino generado
    v = EvaluaPunto(v);
@@ -176,8 +178,10 @@ function uFinal = Recocido(u)
 global params c MIN
 cadSinMejora = 0;
 anterior = u;
-while (cadSinMejora < params.maxCad);
+while (cadSinMejora < params.maxCad)
+   disp('En recocido while');
    u = CadenaMarkov(u);
+   disp("Post Markov");
    if MIN&&(u.f>=anterior.f) || ~MIN&&(u.f<=anterior.f)
       cadSinMejora = cadSinMejora + 1;
    else
