@@ -48,6 +48,9 @@ res = recocido(p,c0);
 %%
 disp(res.ux)
 %%
+disp(res.ux(1:3,1));
+disp(res.ux(1:3,2));
+%%
 % Ahora hacemos animaci�n de los resultados
 for i=1:length(res.intentos)
    subplot(3,1,1)
