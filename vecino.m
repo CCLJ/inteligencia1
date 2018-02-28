@@ -1,17 +1,8 @@
-function v = vecino(varargin)
+function G = generaGrafo(varargin)
 
-% v = vecino(x)
-% vecino(lim,tamVecindad)
+% 
 %
-% Regresa el v el vecino del vector x de longitud n, donde lim es una 
-% matriz nx2 de los valores m�nimos y m�ximos que puede tomar v, y 
-% tamVecindad es un vector nx1 de los tama�os de vecindad.
-%
-% Ejemplo:
-% vecino([0 10;-1 1],[3;0.1])
-% vecino([0;0])
-%
-% See also: recocido
+% See also: recocido, costoSteiner, inicializaSteiner
 
 %*****************************************************************
 %*                                                               *
@@ -27,18 +18,55 @@ function v = vecino(varargin)
 %*                                                               *
 %*****************************************************************
 
-persistent lim tamVecindad
+persistent indicesOriginales puntosTotales
 
-if length(varargin)==1
-   xMin = lim(:,1);
-   xMax = lim(:,2);
-   x = varargin{1};
-   x = x+tamVecindad*2.*(rand(size(x))-0.5);
-   x = x.*~(x>xMax) + xMax.*(x>xMax);
-   v = x.*~(x<xMin) + xMin.*(x<xMin);
-elseif length(varargin)>=2
-   fprintf('Fijando l�mites y tama�o de vecindad en vecino\n')
-   lim = varargin{1};
-   tamVecindad = varargin{2};
+if length(varargin) == 1
+    grafo = varargin{1};
+    
+    maxPuntos = length(puntosTotales);
+    minPuntos = length(indicesOriginales);
+    
+    % numero de nodos random a quitar y agregar al grafo
+    quitar = maxPuntos - length(grafo);
+    agregar = length(grafo) - minPuntos;
+    if quitar > 0
+        remove = randi(quitar);
+    else
+        remove = quitar;
+    end
+    if agregar > 0
+        add = randi(agregar);
+    else
+        add = agregar;
+    end
+    
+    % quitar "remove" cantidad de nodos del grafo, revisando que no sean
+    % los nodos originales con la ayuda de indicesOriginales
+    while remove > 0
+        % obtener indice aleatorio que no pase el tamaño de puntos posibles
+        index = randi(maxPuntos);
+        if ismember(index, grafo) && ~ismember(index, indicesOriginales)
+            grafo(index) = [];
+            remove = remove - 1;
+        end
+    end
+    
+    % agregar "add" cantidad de nodos al grafo, revisando que no exista ya
+    % en el grafo
+    while add > 0
+        % obtener indice aleatorio que no pase el tamaño de puntos posibles
+        index = randi(maxPuntos);
+        if ~ismember(index, grafo)
+            grafo = [grafo; index];
+            add = add - 1;
+        end
+    end
+    G = grafo;
+    
+else
+    indicesOriginales = varargin{1};
+    puntosTotales = varargin{2};
 end
+
+
 
