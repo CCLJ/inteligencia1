@@ -35,7 +35,7 @@ p.x0 = x0'; % estado inicial con nodos al azar y nodos originales
 
 % inicializa vecino y costoSteienr con los indices de los nodos originales
 % y las coordenadas de todos los puntos posibles
-vecino(ind, P, length(p.x0));
+vecino(ind, P, length(P));
 costoSteiner(A,P,ind);
 
 p.FcnObj = @objetivo;  % funci�n objetivo
@@ -45,6 +45,9 @@ p.min = 1;
 c0 = 10;               % temperatura inicial
 
 res = recocido(p,c0);
+%%
+disp(res.ux);
+disp(length(res.intentos));
 %%
 % Ahora hacemos animaci�n de los resultados
 for i=1:length(res.intentos)
@@ -60,8 +63,10 @@ for i=1:length(res.intentos)
    xlabel('intentos')
    ylabel('c')
    subplot(3,1,3)
-   plot(res.ux(1:i,1),res.ux(1:i,2),'.g',...
-      res.x(1:i,1),res.x(1:i,2),'.-b')
+   ux = res.ux{1,1};
+   x = res.x{1,1};
+   plot(ux(1:i,1),ux(1:i,2),'.g',...
+      x(1:i,1),x(1:i,2),'.-b')
    grid on
    axis([-10 10 -10 10])
    xlabel('x')

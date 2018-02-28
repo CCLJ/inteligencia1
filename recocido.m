@@ -68,9 +68,11 @@ mejor = u;
 mejor.intentos = intentos;
 
 % Inicializar res
-res.x = u.x';
+res.x = {u.x'};
+% res.x = u.x';
 res.uf = u.f;
-res.ux = u.x';
+res.ux = {u.x'}
+%  res.ux = u.x';
 res.f = u.f;
 res.c = c;
 res.intentos = intentos;
@@ -108,13 +110,11 @@ else
    end
 end
 if mod(intentos,params.frecImp)==0
-   %disp('resux');
-   %disp(res.ux);
-   %disp('ux');
-   %disp(u.x);
-   res.x = [res.x; mejor.x'];
+   res.x{length(res.x) + 1, 1} = mejor.x';
+   %  res.x = [res.x; mejor.x'];
    res.f = [res.f; mejor.f];
-   res.ux = [res.ux; u.x'];
+   res.ux{length(res.ux) + 1, 1} = u.x';
+   %  res.ux = [res.ux; u.x']; 
    res.uf = [res.uf; u.f];
    res.intentos = [res.intentos; intentos]; 
    res.c = [res.c; c];
