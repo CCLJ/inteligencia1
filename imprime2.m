@@ -18,32 +18,26 @@ function imprime2(mejor,varargin)
 %*   valenzuela@itesm.mx                                         *
 %*   http://homepages.mty.itesm.mx/valenzuela                    *
 %*                                                               *
+%*
 %*   Tecnol�gico de Monterrey, Campus Monterrey                  *
 %*   Monterrey, N.L., M�xico                                     *
 %*                                                               *
 %*****************************************************************
-disp('Imprimiendo');
 if length(varargin)>=1
    actual = varargin{1};
 end
 
-
-
 if length(mejor.x)>1
     fprintf('Current: ');
-    for i = 1; length(mejor.x)
-        fprintf('%d ',mejor.x(i))
-    end
+    disp(mejor.x);
     
 end
-fprintf('  mejor: %7.4f\n',mejor.f);
+fprintf('mejor: %7.4f\n',mejor.f);
 
 if length(varargin)>=1
     fprintf('Actual: ');
-    for i = 1; length(actual.x)
-        fprintf('%d ',actual.x(i))
-    end
-   fprintf('  mejor actual: %7.4f\n',actual.f);
+    disp(actual.x);
+   fprintf('mejor actual: %7.4f\n',actual.f);
 end
 
 if length(varargin)>=2

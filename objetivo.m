@@ -20,13 +20,16 @@ function R = objetivo(grafo)
 
 [costo, conectividad] = costoSteiner(grafo);
 
-if conectividad == 0
-    % castigar al valor de retorno aumentando el costo * el valor más
-    % grande del arreglo grafo.
-    R = costo * max(grafo);
+%fprintf('costo: %7.3f\n', costo);
+
+if conectividad < 1
+    % castigar al valor dividiendolo por una conectividad del doble de
+    % pequña
+    R = costo / (2 * conectividad);
 else
-    % dividir el costo entre el grado de conectividad del grafo dado.
-    R = costo/conectividad;
+    % de lo contrario solo se devuelve el costo, y que se asume que la
+    % conectividad es de 1
+    R = costo*conectividad;
 end
 
 

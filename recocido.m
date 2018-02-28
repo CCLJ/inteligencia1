@@ -108,15 +108,13 @@ else
    end
 end
 if mod(intentos,params.frecImp)==0
-   % res.x = [res.x; mejor.x']; 
-   disp('resux');
-   disp(res.ux);
-   disp('ux');
-   disp(u.x);
+   %disp('resux');
+   %disp(res.ux);
+   %disp('ux');
+   %disp(u.x);
    res.x = [res.x; mejor.x'];
    res.f = [res.f; mejor.f];
-   % res.ux = [res.ux; u.x'];
-   res.ux = [res.ux; u.x];
+   res.ux = [res.ux; u.x'];
    res.uf = [res.uf; u.f];
    res.intentos = [res.intentos; intentos]; 
    res.c = [res.c; c];
@@ -183,7 +181,6 @@ cadSinMejora = 0;
 anterior = u;
 while (cadSinMejora < params.maxCad)
    u = CadenaMarkov(u);
-   disp('Post Markov');
    if MIN&&(u.f>=anterior.f) || ~MIN&&(u.f<=anterior.f)
       cadSinMejora = cadSinMejora + 1;
    else
