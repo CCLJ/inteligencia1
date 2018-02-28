@@ -31,29 +31,33 @@ if length(varargin) == 1
     minPuntos = length(indicesOriginales);
     
     % numero de nodos random a quitar y agregar al grafo
-    %agregar = maxPuntos - length(grafo);
-    %quitar = length(grafo) - minPuntos;
+    agregar = maxPuntos - length(grafo);
+    quitar = length(grafo) - minPuntos;
     %quitar = length(indicesOriginales);
-    quitar = maxNodos - length(indicesOriginales);
+    %quitar = maxNodos - length(indicesOriginales);
+%     if quitar > 0
+%         remove = randi(quitar);
+%         add = remove;
+%     else
+%         remove = quitar;
+%         add = quitar;
+%     end
     if quitar > 0
-        remove = randi(quitar);
-        add = remove;
+       remove = randi(quitar);
     else
-        remove = quitar;
-        add = quitar;
+       remove = quitar;
     end
-    %if agregar > 0
-     %   add = randi(agregar);
-    %else
-     %   add = agregar;
-    %end
+    if agregar > 0
+       add = randi(agregar);
+    else
+       add = agregar;
+    end
     
     % quitar "remove" cantidad de nodos del grafo, revisando que no sean
     % los nodos originales con la ayuda de indicesOriginales
     while remove > 0
         % obtener indice aleatorio que no pase el tamaño de puntos posibles
         index = randi(maxPuntos);
-        %&& ~ismember(index, indicesOriginales)
         if ismember(index, grafo) && ~ismember(index, indicesOriginales)
             it = find(grafo == index);
             grafo(it) = [];
