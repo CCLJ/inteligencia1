@@ -21,16 +21,14 @@ function G = generaGrafo(varargin)
 persistent indicesOriginales puntosTotales
 
 if length(varargin) == 1
-    % disp(indicesOriginales);
-    % disp(puntosTotales);
     grafo = varargin{1};
     
     maxPuntos = length(puntosTotales);
     minPuntos = length(indicesOriginales);
     
     % numero de nodos random a quitar y agregar al grafo
-    quitar = maxPuntos - length(grafo);
-    agregar = length(grafo) - minPuntos;
+    agregar = maxPuntos - length(grafo);
+    quitar = length(grafo) - minPuntos;
     if quitar > 0
         remove = randi(quitar);
     else
@@ -47,6 +45,7 @@ if length(varargin) == 1
     while remove > 0
         % obtener indice aleatorio que no pase el tamaño de puntos posibles
         index = randi(maxPuntos);
+        %&& ~ismember(index, indicesOriginales)
         if ismember(index, grafo) && ~ismember(index, indicesOriginales)
             it = find(grafo == index);
             grafo(it) = [];

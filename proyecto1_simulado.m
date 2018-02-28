@@ -25,7 +25,8 @@ C = [0 6; 5 0; 2 5; 4 8; 9 3; 10 6; 2 9; 8 0; 15 4];
 %disp(ind);
 %disp(A);
 
-p.x0 = ind'; % nodos iniciales a tomar en cuenta son los originales
+% (numero nodos = 1-56 para los problemas del proyecto)
+p.x0 = [1 3 5 7 9]'; % estado inicial con nodos al azar 
 
 % inicializa vecino y costoSteienr con los indices de los nodos originales
 % y las coordenadas de todos los puntos posibles

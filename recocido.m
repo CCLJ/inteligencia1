@@ -108,9 +108,15 @@ else
    end
 end
 if mod(intentos,params.frecImp)==0
+   % res.x = [res.x; mejor.x']; 
+   disp('resux');
+   disp(res.ux);
+   disp('ux');
+   disp(u.x);
    res.x = [res.x; mejor.x'];
    res.f = [res.f; mejor.f];
-   res.ux = [res.ux; u.x'];
+   % res.ux = [res.ux; u.x'];
+   res.ux = [res.ux; u.x];
    res.uf = [res.uf; u.f];
    res.intentos = [res.intentos; intentos]; 
    res.c = [res.c; c];
@@ -144,12 +150,9 @@ function [uFinal,razonAceptacion] = CadenaMarkov(u)
 global params c MIN
 intentos = 0;
 intentosAceptados = 0;
-disp(u);
-disp("afuera cadena markov");
 while intentosAceptados<params.cadIntAcep && ...
       intentos<params.cadInt
    % genera vecino
-   disp("En cadena markov while");
    v.x = params.FcnVec(u.x);
    % evaluacion de vecino generado
    v = EvaluaPunto(v);
@@ -179,9 +182,8 @@ global params c MIN
 cadSinMejora = 0;
 anterior = u;
 while (cadSinMejora < params.maxCad)
-   disp('En recocido while');
    u = CadenaMarkov(u);
-   disp("Post Markov");
+   disp('Post Markov');
    if MIN&&(u.f>=anterior.f) || ~MIN&&(u.f<=anterior.f)
       cadSinMejora = cadSinMejora + 1;
    else
