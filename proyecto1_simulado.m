@@ -46,6 +46,8 @@ c0 = 10;               % temperatura inicial
 
 res = recocido(p,c0);
 %%
+disp(res.ux)
+%%
 % Ahora hacemos animaci�n de los resultados
 for i=1:length(res.intentos)
    subplot(3,1,1)
