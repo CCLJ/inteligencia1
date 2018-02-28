@@ -28,16 +28,14 @@ if length(varargin)>=1
 end
 
 if length(mejor.x)>1
-    fprintf('Current: ');
-    disp(mejor.x);
+    fprintf('Current mejor: %7.4f\n ', mejor.f);
+    disp(mejor.x');
     
 end
-fprintf('mejor: %7.4f\n',mejor.f);
 
 if length(varargin)>=1
-    fprintf('Actual: ');
-    disp(actual.x);
-   fprintf('mejor actual: %7.4f\n',actual.f);
+    fprintf('Actual: mejor: %7.4f\n', actual.f);
+    disp(actual.x');
 end
 
 if length(varargin)>=2
@@ -47,5 +45,4 @@ end
 if length(varargin)>=3
    fprintf(' c=%f',varargin{3});
 end
-
-fprintf('\n')
+fprintf('\n');

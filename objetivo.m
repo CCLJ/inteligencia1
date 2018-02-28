@@ -1,6 +1,6 @@
 function R = objetivo(grafo)
 
-% 
+% Obtiene la evaluacion del grafo dado.
 %
 % See also: recocido, costoSteiner, inicializaSteiner
 
@@ -20,16 +20,15 @@ function R = objetivo(grafo)
 
 [costo, conectividad] = costoSteiner(grafo);
 
-%fprintf('costo: %7.3f\n', costo);
-
 if conectividad < 1
-    % castigar al valor dividiendolo por una conectividad del doble de
-    % pequña
-    R = costo / (2 * conectividad);
+    % castigar al valor con una conectividad 1 + lo que le falto a la
+    % conectivdad original de alcanzar el valor de 1
+    factor = 1 + (1 - conectividad);
+    R = costo * factor;    
 else
-    % de lo contrario solo se devuelve el costo, y que se asume que la
+    % de lo contrario solo se devuelve el costo, ya que se asume que la
     % conectividad es de 1
-    R = costo*conectividad;
+    R = costo;
 end
 
 

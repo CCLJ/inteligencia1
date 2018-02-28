@@ -4,11 +4,11 @@
 
 %% Optimizaci�n de f1
 
-p.cadIntAcep = 80;
-p.cadInt = 200;
+p.cadIntAcep = 45;
+p.cadInt = 140;
 p.maxCad = 10;
-p.frecImp = 10;
-p.alfa = 0.95;
+p.frecImp = 20;
+p.alfa = 0.90;
 p.beta = 1.2;
 p.minRazAcep = 0.95;
 p.variarC = 0;
@@ -31,9 +31,7 @@ for i = 1: len
     end
     x0 = [x0 nodo];
 end
-disp(len);
-disp(length(x0));
-p.x0 = x0'; % estado inicial con nodos al azar 
+p.x0 = x0'; % estado inicial con nodos al azar y nodos originales 
 
 % inicializa vecino y costoSteienr con los indices de los nodos originales
 % y las coordenadas de todos los puntos posibles

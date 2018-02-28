@@ -18,7 +18,7 @@ C = [0 6; 5 0; 2 5; 4 8; 9 3; 10 6; 2 9; 8 0; 15 4];
 
 clf
 % Grafo que se desea graficar
-G = [4 8 10 17 20 22 27 37 41 42 43 44 45 47 48 57 58];
+G = [4 8 10 17 20 22 27 37 41 42 43 44 45 47 48 55 56];
 % Se inicializan datos para calcular el costo
 costoSteiner(A,P,ind)
 % Se calculan los costos del grafo G

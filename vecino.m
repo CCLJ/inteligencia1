@@ -1,6 +1,10 @@
 function G = generaGrafo(varargin)
 
-% 
+% Generra un nuevo grafo si varagin == 1. De otra manera, inicializa
+% ciertas variables.
+% indicesOriginales = indices de los puntos originales
+% puntosTotales = todos los puntos posibles en el plano
+% maxNodos = tamaño que deben tener los grafos
 %
 % See also: recocido, costoSteiner, inicializaSteiner
 
@@ -73,8 +77,6 @@ else
     indicesOriginales = varargin{1};
     puntosTotales = varargin{2};
     maxNodos = varargin{3};
-    % disp(indicesOriginales);
-    % disp(puntosTotales);
 end
 
 
