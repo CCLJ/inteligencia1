@@ -47,7 +47,7 @@ c0 = 10;               % temperatura inicial
 res = recocido(p,c0);
 %%
 disp(res.ux);
-disp(length(res.intentos));
+disp(res.x);
 %%
 % Ahora hacemos animaci�n de los resultados
 for i=1:length(res.intentos)
@@ -63,10 +63,15 @@ for i=1:length(res.intentos)
    xlabel('intentos')
    ylabel('c')
    subplot(3,1,3)
-   ux = res.ux{1,1};
-   x = res.x{1,1};
-   plot(ux(1:i,1),ux(1:i,2),'.g',...
-      x(1:i,1),x(1:i,2),'.-b')
+   uxr = res.ux;
+   xr = res.x;
+   for j = 1: i
+       ux = uxr{j,1};
+       x = xr{j,1};
+       plot(ux(1:i,1),ux(1:i,2),'.g',...
+       x(1:i,1),x(1:i,2),'.-b')
+   end
+   
    grid on
    axis([-10 10 -10 10])
    xlabel('x')
