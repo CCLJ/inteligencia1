@@ -151,6 +151,7 @@ intentosAceptados = 0;
 while intentosAceptados<params.cadIntAcep && ...
       intentos<params.cadInt
    % genera vecino
+   % disp('while cadena'); 
    v.x = params.FcnVec(u.x);
    % evaluacion de vecino generado
    v = EvaluaPunto(v);
@@ -179,7 +180,8 @@ function uFinal = Recocido(u)
 global params c MIN
 cadSinMejora = 0;
 anterior = u;
-while (cadSinMejora < params.maxCad)
+while (cadSinMejora < params.maxCad) 
+   %disp('while recocido');
    u = CadenaMarkov(u);
    if MIN&&(u.f>=anterior.f) || ~MIN&&(u.f<=anterior.f)
       cadSinMejora = cadSinMejora + 1;

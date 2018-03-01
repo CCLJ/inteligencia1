@@ -4,10 +4,10 @@
 
 %% Optimizaci�n de f1
 
-p.cadIntAcep = 45;
-p.cadInt = 140;
+p.cadIntAcep = 40;
+p.cadInt = 120;
 p.maxCad = 10;
-p.frecImp = 20;
+p.frecImp = 100;
 p.alfa = 0.90;
 p.beta = 1.2;
 p.minRazAcep = 0.95;
@@ -15,6 +15,7 @@ p.variarC = 0;
 
 % Coordenadas de los datos originales
 C = [0 6; 5 0; 2 5; 4 8; 9 3; 10 6; 2 9; 8 0; 15 4];
+%C = [2 2; 11 7; 0 1; 3 0; 5 2; 11 1; 7 9; 6 2; 6 1; 1 8];
 
 % Inicializa Steiner obtiene los datos de todos los nodos y aristas
 % posibles.
@@ -42,54 +43,12 @@ p.FcnObj = @objetivo;  % funci�n objetivo
 p.FcnVec = @vecino;    % funci�n de vecindad
 p.Imp = @imprime2;      % funci�n de impresi�n
 p.min = 1;
-c0 = 10;               % temperatura inicial
+c0 = 20;               % temperatura inicial
 
 res = recocido(p,c0);
-%%
-% disp(res.ux);
-% disp(res.x);
-%%
-% Ahora hacemos animaci�n de los resultados
-% Estas graficas solo muestran buenos resultados cuando se tienen variables
-% x y y, no cuando se trabaja con los indices de los nodos. Es por esto que
-% los resultados que la grafica que aparece tiene puntos al azar. Los
-% puntos correspondend a los indices de los 2 primeros nodos de cada
-% renglon del resultado
-% for i=1:length(res.intentos)
-%    subplot(3,1,1)
-%    plot(res.intentos(1:i),res.uf(1:i),'.g',...
-%       res.intentos(1:i),res.f(1:i),'-b')
-%    axis([0 max(res.intentos) 0 200])
-%    xlabel('intentos')
-%    ylabel('mejor encontrado')
-%    subplot(3,1,2)
-%    plot(res.intentos(1:i),res.c(1:i),'.-r')
-%    axis([0 max(res.intentos) 0 max(res.c)])
-%    xlabel('intentos')
-%    ylabel('c')
-%    subplot(3,1,3)
-%    uxr = res.ux;
-%    xr = res.x;
-%    for j = 1: i
-%        ux = uxr{j,1};
-%        x = xr{j,1};
-%        plot(ux(1),ux(2),'.g',...
-%         x(1),x(2),'.-b')
-%    end
-%    
-%    grid on
-%    axis([-10 10 -10 10])
-%    xlabel('x')
-%    ylabel('y')
-%    pause(0.01)
-% end
 
 %% Curva de mejor encontrado para f1
 % Obtenemos la curva de mejor encontrado para f1.
 clf
-p.frecImp = 10;
-[x,prom,desv] = plotRecocido(p,20,c0);
-%%
-% for i = 1: length(P)
-%     fprintf("%d: %d %d\n", i, P(i,1), P(i,2));
-% end
+p.frecImp = 100;
+[x,prom,desv] = plotRecocido(p,10,c0);

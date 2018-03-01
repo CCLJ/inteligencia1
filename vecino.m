@@ -1,4 +1,4 @@
-function G = generaGrafo(varargin)
+function G = vecino(varargin)
 
 % Generra un nuevo grafo si varagin == 1. De otra manera, inicializa
 % ciertas variables.
@@ -48,28 +48,24 @@ if length(varargin) == 1
                     grafo(it) = [];
                     remove = remove - 1;
                 end
+                %disp('while remove 1');
             end
             G = grafo;
         else
-            % no se pueden quitar nodos, habrá que cambiar uno de ellos
-            % para intentar reducir el costo total. La conectividad podría
-            % verse reducida
-            
-            % nodo a quitar
-            nodoQ = randi(maxPuntos);
-            while ~ismember(nodoQ, grafo) || ismember(nodoQ, indicesOriginales)
-                nodoQ = randi(maxPuntos);
+            % no se pueden quitar nodos, habrá que agregar
+            agregar = maxPuntos - length(grafo);
+            add = randi(agregar);
+            % agregar "add" cantidad de nodos al grafo, revisando que no exista ya
+            % en el grafo
+            while add > 0
+                % obtener indice aleatorio que no pase el tamaño de puntos posibles
+                index = randi(maxPuntos);
+                if ~ismember(index, grafo)
+                    grafo = [grafo; index];
+                    add = add - 1;
+                end
+                %disp('while add 1')
             end
-            
-            % nodo a agregar
-            nodoA = randi(maxPuntos);
-            while ismember(nodoA, grafo)
-                nodoA = randi(maxPuntos);
-            end
-            
-            % remplazo nodo
-            indice = find(grafo == nodoQ);
-            grafo(indice) = nodoA;
             
             G = grafo;
             
@@ -78,20 +74,14 @@ if length(varargin) == 1
     else
         % es necesario generar un vecino con mejor conectividad
         newConect = 0;
-        while newConect < conect && newConect ~= 1
+        while newConect < conect
             g = grafo;
             % numero de nodos random a quitar y agregar al grafo
-            agregar = maxPuntos - length(g);
             quitar = length(g) - minPuntos;
             if quitar > 0
                remove = randi(quitar);
             else
                remove = quitar;
-            end
-            if agregar > 0
-               add = randi(agregar);
-            else
-               add = agregar;
             end
 
             % quitar "remove" cantidad de nodos del grafo, revisando que no sean
@@ -104,8 +94,16 @@ if length(varargin) == 1
                     g(it) = [];
                     remove = remove - 1;
                 end
+                %disp('while newC remove');
             end
-
+            
+            agregar = maxPuntos - length(g);
+            if agregar > 0
+               add = randi(agregar);
+            else
+               add = agregar;
+            end
+            
             % agregar "add" cantidad de nodos al grafo, revisando que no exista ya
             % en el grafo
             while add > 0

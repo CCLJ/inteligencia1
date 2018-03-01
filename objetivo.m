@@ -19,16 +19,13 @@ function R = objetivo(grafo)
 %*****************************************************************
 
 [costo, conectividad] = costoSteiner(grafo);
-%fprintf('conectividad: %2.5f\n', conectividad);
 if conectividad < 1
     % castigar al valor con una conectividad 1 + lo que le falto a la
     % conectivdad original de alcanzar el valor de 1
     factor = 1 + (1 - conectividad);
     R = costo * factor;    
 else
-    % de lo contrario solo se devuelve el costo, ya que se asume que la
-    % conectividad es de 1
-    R = costo;
+    R = costo * length(grafo);
 end
 
 
