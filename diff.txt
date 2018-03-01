@@ -1,0 +1,179 @@
+[1mdiff --git a/objetivo.m b/objetivo.m[m
+[1mindex 12d1d72..8b17596 100644[m
+[1m--- a/objetivo.m[m
+[1m+++ b/objetivo.m[m
+[36m@@ -19,7 +19,7 @@[m [mfunction R = objetivo(grafo)[m
+ %*****************************************************************[m
+ [m
+ [costo, conectividad] = costoSteiner(grafo);[m
+[31m-[m
+[32m+[m[32m%fprintf('conectividad: %2.5f\n', conectividad);[m
+ if conectividad < 1[m
+     % castigar al valor con una conectividad 1 + lo que le falto a la[m
+     % conectivdad original de alcanzar el valor de 1[m
+[1mdiff --git a/proyecto1_simulado.m b/proyecto1_simulado.m[m
+[1mindex 16ab94f..09f18ab 100644[m
+[1m--- a/proyecto1_simulado.m[m
+[1m+++ b/proyecto1_simulado.m[m
+[36m@@ -89,3 +89,7 @@[m [mres = recocido(p,c0);[m
+ clf[m
+ p.frecImp = 10;[m
+ [x,prom,desv] = plotRecocido(p,20,c0);[m
+[32m+[m[32m%%[m
+[32m+[m[32m% for i = 1: length(P)[m
+[32m+[m[32m%     fprintf("%d: %d %d\n", i, P(i,1), P(i,2));[m
+[32m+[m[32m% end[m
+[1mdiff --git a/vecino.m b/vecino.m[m
+[1mindex 4127273..8f404ef 100755[m
+[1m--- a/vecino.m[m
+[1m+++ b/vecino.m[m
+[36m@@ -25,58 +25,102 @@[m [mfunction G = generaGrafo(varargin)[m
+ persistent indicesOriginales puntosTotales maxNodos[m
+ [m
+ if length(varargin) == 1[m
+[31m-    grafo = varargin{1};[m
+     [m
+[32m+[m[32m    grafo = varargin{1};[m[41m[m
+[32m+[m[32m    [~, conect] = costoSteiner(grafo);[m[41m[m
+     maxPuntos = length(puntosTotales);[m
+     minPuntos = length(indicesOriginales);[m
+     [m
+[31m-    % numero de nodos random a quitar y agregar al grafo[m
+[31m-    agregar = maxPuntos - length(grafo);[m
+[31m-    quitar = length(grafo) - minPuntos;[m
+[31m-    %quitar = length(indicesOriginales);[m
+[31m-    %quitar = maxNodos - length(indicesOriginales);[m
+[31m-%     if quitar > 0[m
+[31m-%         remove = randi(quitar);[m
+[31m-%         add = remove;[m
+[31m-%     else[m
+[31m-%         remove = quitar;[m
+[31m-%         add = quitar;[m
+[31m-%     end[m
+[31m-    if quitar > 0[m
+[31m-       remove = randi(quitar);[m
+[31m-    else[m
+[31m-       remove = quitar;[m
+[31m-    end[m
+[31m-    if agregar > 0[m
+[31m-       add = randi(agregar);[m
+[31m-    else[m
+[31m-       add = agregar;[m
+[31m-    end[m
+[31m-    [m
+[31m-    % quitar "remove" cantidad de nodos del grafo, revisando que no sean[m
+[31m-    % los nodos originales con la ayuda de indicesOriginales[m
+[31m-    while remove > 0[m
+[31m-        % obtener indice aleatorio que no pase el tamaño de puntos posibles[m
+[31m-        index = randi(maxPuntos);[m
+[31m-        if ismember(index, grafo) && ~ismember(index, indicesOriginales)[m
+[31m-            it = find(grafo == index);[m
+[31m-            grafo(it) = [];[m
+[31m-            remove = remove - 1;[m
+[31m-        end[m
+[31m-    end[m
+[31m-    [m
+[31m-    % agregar "add" cantidad de nodos al grafo, revisando que no exista ya[m
+[31m-    % en el grafo[m
+[31m-    while add > 0[m
+[31m-        % obtener indice aleatorio que no pase el tamaño de puntos posibles[m
+[31m-        index = randi(maxPuntos);[m
+[31m-        if ~ismember(index, grafo)[m
+[31m-            grafo = [grafo; index];[m
+[31m-            add = add - 1;[m
+[32m+[m[32m    if conect == 1[m[41m[m
+[32m+[m[32m        % ya tenemos conectividad de 1, lo que hay que hacer ahora es[m[41m[m
+[32m+[m[32m        % disminuir el numero de nodos usados[m[41m[m
+[32m+[m[32m        n = length(grafo) - minPuntos;[m[41m[m
+[32m+[m[32m        if n > 0[m[41m[m
+[32m+[m[32m            % se pueden quitar 1 o mas nodos[m[41m[m
+[32m+[m[32m            remove = randi(n);[m[41m[m
+[32m+[m[32m            % quitar "remove" cantidad de nodos del grafo, revisando que no sean[m[41m[m
+[32m+[m[32m            % los nodos originales con la ayuda de indicesOriginales[m[41m[m
+[32m+[m[32m            while remove > 0[m[41m[m
+[32m+[m[32m                % obtener indice aleatorio que no pase el tamaño de puntos posibles[m[41m[m
+[32m+[m[32m                index = randi(maxPuntos);[m[41m[m
+[32m+[m[32m                if ismember(index, grafo) && ~ismember(index, indicesOriginales)[m[41m[m
+[32m+[m[32m                    it = find(grafo == index);[m[41m[m
+[32m+[m[32m                    grafo(it) = [];[m[41m[m
+[32m+[m[32m                    remove = remove - 1;[m[41m[m
+[32m+[m[32m                end[m[41m[m
+[32m+[m[32m            end[m[41m[m
+[32m+[m[32m            G = grafo;[m[41m[m
+[32m+[m[32m        else[m[41m[m
+[32m+[m[32m            % no se pueden quitar nodos, habrá que cambiar uno de ellos[m[41m[m
+[32m+[m[32m            % para intentar reducir el costo total. La conectividad podría[m[41m[m
+[32m+[m[32m            % verse reducida[m[41m[m
+[32m+[m[41m            [m
+[32m+[m[32m            % nodo a quitar[m[41m[m
+[32m+[m[32m            nodoQ = randi(maxPuntos);[m[41m[m
+[32m+[m[32m            while ~ismember(nodoQ, grafo) || ismember(nodoQ, indicesOriginales)[m[41m[m
+[32m+[m[32m                nodoQ = randi(maxPuntos);[m[41m[m
+[32m+[m[32m            end[m[41m[m
+[32m+[m[41m            [m
+[32m+[m[32m            % nodo a agregar[m[41m[m
+[32m+[m[32m            nodoA = randi(maxPuntos);[m[41m[m
+[32m+[m[32m            while ismember(nodoA, grafo)[m[41m[m
+[32m+[m[32m                nodoA = randi(maxPuntos);[m[41m[m
+[32m+[m[32m            end[m[41m[m
+[32m+[m[41m            [m
+[32m+[m[32m            % remplazo nodo[m[41m[m
+[32m+[m[32m            indice = find(grafo == nodoQ);[m[41m[m
+[32m+[m[32m            grafo(indice) = nodoA;[m[41m[m
+[32m+[m[41m            [m
+[32m+[m[32m            G = grafo;[m[41m[m
+[32m+[m[41m            [m
+         end[m
+[31m-    end[m
+[31m-    G = grafo;[m
+[31m-    [m
+[32m+[m[41m        [m
+[32m+[m[32m    else[m[41m[m
+[32m+[m[32m        % es necesario generar un vecino con mejor conectividad[m[41m[m
+[32m+[m[32m        newConect = 0;[m[41m[m
+[32m+[m[32m        while newConect < conect && newConect ~= 1[m[41m[m
+[32m+[m[32m            g = grafo;[m[41m[m
+[32m+[m[32m            % numero de nodos random a quitar y agregar al grafo[m[41m[m
+[32m+[m[32m            agregar = maxPuntos - length(g);[m[41m[m
+[32m+[m[32m            quitar = length(g) - minPuntos;[m[41m[m
+[32m+[m[32m            if quitar > 0[m[41m[m
+[32m+[m[32m               remove = randi(quitar);[m[41m[m
+[32m+[m[32m            else[m[41m[m
+[32m+[m[32m               remove = quitar;[m[41m[m
+[32m+[m[32m            end[m[41m[m
+[32m+[m[32m            if agregar > 0[m[41m[m
+[32m+[m[32m               add = randi(agregar);[m[41m[m
+[32m+[m[32m            else[m[41m[m
+[32m+[m[32m               add = agregar;[m[41m[m
+[32m+[m[32m            end[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m            % quitar "remove" cantidad de nodos del grafo, revisando que no sean[m[41m[m
+[32m+[m[32m            % los nodos originales con la ayuda de indicesOriginales[m[41m[m
+[32m+[m[32m            while remove > 0[m[41m[m
+[32m+[m[32m                % obtener indice aleatorio que no pase el tamaño de puntos posibles[m[41m[m
+[32m+[m[32m                index = randi(maxPuntos);[m[41m[m
+[32m+[m[32m                if ismember(index, g) && ~ismember(index, indicesOriginales)[m[41m[m
+[32m+[m[32m                    it = find(g == index);[m[41m[m
+[32m+[m[32m                    g(it) = [];[m[41m[m
+[32m+[m[32m                    remove = remove - 1;[m[41m[m
+[32m+[m[32m                end[m[41m[m
+[32m+[m[32m            end[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m            % agregar "add" cantidad de nodos al grafo, revisando que no exista ya[m[41m[m
+[32m+[m[32m            % en el grafo[m[41m[m
+[32m+[m[32m            while add > 0[m[41m[m
+[32m+[m[32m                % obtener indice aleatorio que no pase el tamaño de puntos posibles[m[41m[m
+[32m+[m[32m                index = randi(maxPuntos);[m[41m[m
+[32m+[m[32m                if ~ismember(index, g)[m[41m[m
+[32m+[m[32m                    g = [g; index];[m[41m[m
+[32m+[m[32m                    add = add - 1;[m[41m[m
+[32m+[m[32m                end[m[41m[m
+[32m+[m[32m            end[m[41m[m
+[32m+[m[32m            [~, newConect] = costoSteiner(g);[m[41m[m
+[32m+[m[32m        end[m[41m  [m
+[32m+[m[32m        G = g;[m[41m[m
+[32m+[m[32m    end % else del if conect == 1[m[41m[m
+[32m+[m[41m[m
+ else[m
+     indicesOriginales = varargin{1};[m
+     puntosTotales = varargin{2};[m

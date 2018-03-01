@@ -89,3 +89,7 @@ res = recocido(p,c0);
 clf
 p.frecImp = 10;
 [x,prom,desv] = plotRecocido(p,20,c0);
+%%
+% for i = 1: length(P)
+%     fprintf("%d: %d %d\n", i, P(i,1), P(i,2));
+% end
