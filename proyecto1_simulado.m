@@ -14,8 +14,8 @@ p.minRazAcep = 0.95;
 p.variarC = 0;
 
 % Coordenadas de los datos originales
-C = [0 6; 5 0; 2 5; 4 8; 9 3; 10 6; 2 9; 8 0; 15 4];
-%C = [2 2; 11 7; 0 1; 3 0; 5 2; 11 1; 7 9; 6 2; 6 1; 1 8];
+%C = [0 6; 5 0; 2 5; 4 8; 9 3; 10 6; 2 9; 8 0; 15 4];
+C = [2 2; 11 7; 0 1; 3 0; 5 2; 11 1; 7 9; 6 2; 6 1; 1 8];
 
 % Inicializa Steiner obtiene los datos de todos los nodos y aristas
 % posibles.

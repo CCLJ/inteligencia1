@@ -20,12 +20,13 @@ function R = objetivo(grafo)
 
 [costo, conectividad] = costoSteiner(grafo);
 if conectividad < 1
-    % castigar al valor con una conectividad 1 + lo que le falto a la
-    % conectivdad original de alcanzar el valor de 1
+    % castigar al costo con una conectividad 1 + lo que le falto a la
+    % conectivdad original de alcanzar el valor de 1 y por el el valor de
+    % la cantidad de nodos usados en este grafo
     factor = 1 + (1 - conectividad);
-    R = costo * factor;    
+    R = costo * factor * length(grafo);
 else
-    R = costo * length(grafo);
+    R = costo;
 end
 
 
